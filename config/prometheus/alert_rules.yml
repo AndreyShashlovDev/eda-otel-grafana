@@ -1,0 +1,20 @@
+groups:
+  - name: order_processing
+    rules:
+      - alert: HighOrderProcessingTime
+        expr: histogram_quantile(0.95, sum(rate(orders_processing_time_bucket[5m])) by (le)) > 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High order processing time"
+          description: "95% of orders are processed in less than 5 seconds"
+      
+      - alert: TooManyFailedOrders
+        expr: orders_by_status{status="failed"} > 5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Too many failed orders"
+          description: "The number of orders with the status 'failed' exceeds the threshold"
