@@ -1,6 +1,6 @@
-import { MetricsController } from '@app/telemetry/MetricsController'
-import { orderMetricsProviders } from '@app/telemetry/MetricsProviders'
-import { OrderMetricsService } from '@app/telemetry/OrderMetricsService'
+import { MetricsController } from '@app/telemetry/metrics/MetricsController'
+import { OrderMetricsModule } from '@app/telemetry/metrics/order/OrderMetricsModule'
+import { OrderMetricsService } from '@app/telemetry/metrics/order/OrderMetricsService'
 import { Module } from '@nestjs/common'
 import { TerminusModule } from '@nestjs/terminus'
 import { PrometheusModule } from '@willsoto/nestjs-prometheus'
@@ -14,11 +14,6 @@ import { PrometheusModule } from '@willsoto/nestjs-prometheus'
     }),
     TerminusModule,
   ],
-  providers: [
-    ...orderMetricsProviders,
-    OrderMetricsService
-  ],
   controllers: [MetricsController],
-  exports: [OrderMetricsService],
 })
 export class TelemetryModule {}

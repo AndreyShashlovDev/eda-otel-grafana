@@ -1,5 +1,5 @@
 import { OrderStatus } from '@app/database/entity/OrderEntity'
-import { OrderMetricsName } from '@app/telemetry/MetricsProviders'
+import { OrderMetricsName } from '@app/telemetry/metrics/order/OrderMetricsName'
 import { Injectable } from '@nestjs/common'
 import { InjectMetric } from '@willsoto/nestjs-prometheus'
 import { Counter, Gauge, Histogram } from 'prom-client'

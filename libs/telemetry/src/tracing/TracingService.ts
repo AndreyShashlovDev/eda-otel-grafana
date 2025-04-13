@@ -10,6 +10,11 @@ export class TracingService {
     this.tracer = trace.getTracer(serviceName)
   }
 
+  getCurrentSpan(): Span {
+    const activeContext = context.active()
+    return trace.getSpan(activeContext)
+  }
+
   async trace<T>(
     spanName: string,
     attributes: Record<string, any>,

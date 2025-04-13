@@ -1,6 +1,6 @@
 process.env.SERVICE_NAME = 'api-gateway'
 
-import { startTracing } from '@app/telemetry/tracing'
+import { startTracing } from '@app/telemetry/tracing/tracing'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'

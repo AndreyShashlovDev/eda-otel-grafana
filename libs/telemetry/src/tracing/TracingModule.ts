@@ -1,10 +1,11 @@
-import { TracingService } from '@app/telemetry/TracingService'
-import { DynamicModule, Module } from '@nestjs/common'
+import { TracingService } from '@app/telemetry/tracing/TracingService'
+import { DynamicModule, Global, Module, OnModuleInit } from '@nestjs/common'
 import { ModuleRef } from '@nestjs/core'
-import { setModuleRef } from '../ModuleRef'
+import { setModuleRef } from './ModuleRef'
 
+@Global()
 @Module({})
-export class TracingModule {
+export class TracingModule implements OnModuleInit {
 
   constructor(private moduleRef: ModuleRef) {}
 

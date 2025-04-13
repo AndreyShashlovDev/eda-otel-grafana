@@ -1,10 +1,11 @@
 import { ConfigModule } from '@app/config/ConfigModule'
 import { Order } from '@app/database/entity/OrderEntity'
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { TypeOrmModuleOptions } from '@nestjs/typeorm/dist/interfaces/typeorm-options.interface'
 
+@Global()
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({

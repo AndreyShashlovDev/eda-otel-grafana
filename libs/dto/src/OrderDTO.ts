@@ -40,9 +40,9 @@ export class CreateOrderDto {
 
   @IsObject()
   @IsOptional()
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 
-  constructor(userId: string, items: OrderItemDto[], total: number, metadata: Record<string, any>) {
+  constructor(userId: string, items: OrderItemDto[], total: number, metadata: Record<string, unknown>) {
     this.userId = userId
     this.items = items
     this.total = total
@@ -51,6 +51,7 @@ export class CreateOrderDto {
 }
 
 export class CreateOrderResponseDto {
+
   @IsUUID()
   orderId: string
 
@@ -63,6 +64,7 @@ export class CreateOrderResponseDto {
 }
 
 export class GetOrderDto {
+
   @IsUUID()
   orderId: string
 
@@ -100,7 +102,7 @@ export class OrderResponseDto {
     items: OrderItemDto[],
     total: number,
     status: OrderStatus,
-    metadata: Record<string, any>,
+    metadata: Record<string, unknown>,
     createdAt: Date,
     updatedAt: Date
   ) {

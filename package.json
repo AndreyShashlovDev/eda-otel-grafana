@@ -91,8 +91,7 @@
       "^@app/kafka(|/.*)$": "<rootDir>/libs/kafka/src/$1",
       "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
       "^@app/dto(|/.*)$": "<rootDir>/libs/dto/src/$1",
-      "^@app/telemetry(|/.*)$": "<rootDir>/libs/telemetry/src/$1",
-      "^@app/repository(|/.*)$": "<rootDir>/libs/repository/src/$1"
+      "^@app/telemetry(|/.*)$": "<rootDir>/libs/telemetry/src/$1"
     }
   }
 }

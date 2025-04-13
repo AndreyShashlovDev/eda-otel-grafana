@@ -1,15 +1,15 @@
-import { OrdersRepositoryModule } from '@app/repository/orders/OrdersRepositoryModule'
-import { RepositoryModule } from '@app/repository/RepositoryModule'
-import { TelemetryModule } from '@app/telemetry/PrometheusModule'
+import { OrderMetricsModule } from '@app/telemetry/metrics/order/OrderMetricsModule'
+import { TelemetryModule } from '@app/telemetry/metrics/PrometheusModule'
 import { Module } from '@nestjs/common'
 import { OrdersController } from './OrdersController'
 import { OrdersService } from './OrdersService'
+import { OrdersRepositoryModule } from '../repository/orders/OrdersRepositoryModule'
 
 @Module({
   imports: [
-    RepositoryModule,
     OrdersRepositoryModule,
     TelemetryModule,
+    OrderMetricsModule,
   ],
   controllers: [OrdersController],
   providers: [OrdersService],

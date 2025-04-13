@@ -1,14 +1,14 @@
 import { Order, OrderStatus } from '@app/database/entity/OrderEntity'
 import { CreateOrderDto } from '@app/dto/OrderDTO'
-import { OrdersRepository } from '@app/repository/orders/OrdersRepository'
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { OrdersRepository } from './OrdersRepository'
 
 @Injectable()
 export class OrdersRepositoryImpl extends OrdersRepository {
 
-  private readonly logger = new Logger(OrdersRepository.name)
+  private readonly logger = new Logger(OrdersRepositoryImpl.name)
 
   constructor(
     @InjectRepository(Order) private readonly orderRepository: Repository<Order>,
@@ -69,15 +69,6 @@ export class OrdersRepositoryImpl extends OrdersRepository {
       return await this.orderRepository.save(order)
     } catch (error) {
       this.logger.error(`Error updating order ${id} status: ${error.message}`, error.stack)
-      throw error
-    }
-  }
-
-  async save(order: Order): Promise<Order> {
-    try {
-      return await this.orderRepository.save(order)
-    } catch (error) {
-      this.logger.error(`Error saving order: ${error.message}`, error.stack)
       throw error
     }
   }

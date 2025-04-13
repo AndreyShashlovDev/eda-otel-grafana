@@ -1,6 +1,6 @@
 process.env.SERVICE_NAME = 'order-service'
-import { startTracing } from '@app/telemetry/tracing'
-import { Logger } from '@nestjs/common'
+import { startTracing } from '@app/telemetry/tracing/tracing'
+import { Logger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { MicroserviceOptions, Transport } from '@nestjs/microservices'
@@ -35,6 +35,17 @@ async function bootstrap() {
       },
     },
   })
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  )
 
   const httpPort = configService.get<number>('METRICS_PORT', 3010)
 

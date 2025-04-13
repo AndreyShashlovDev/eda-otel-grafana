@@ -1,26 +1,14 @@
 import { ConfigModule } from '@app/config/ConfigModule'
-import { KafkaModule } from '@app/kafka/KafkaModule'
-import { orderMetricsProviders } from '@app/telemetry/MetricsProviders'
-import { OrderMetricsService } from '@app/telemetry/OrderMetricsService'
-import { TelemetryModule } from '@app/telemetry/PrometheusModule'
-import { TracingModule } from '@app/telemetry/TracingModule'
+import { TracingModule } from '@app/telemetry/tracing/TracingModule'
 import { Module } from '@nestjs/common'
-import { ApiOrdersController } from './ApiOrdersController'
-import { ApiOrdersService } from './ApiOrdersService'
+import { ApiOrdersModule } from './api/orders/ApiOrdersModule'
 
 @Module({
   imports: [
     ConfigModule,
     TracingModule.forRoot('api-gateway'),
-    KafkaModule,
-    TelemetryModule,
+    ApiOrdersModule,
   ],
-  providers: [
-    ...orderMetricsProviders,
-    OrderMetricsService,
-    ApiOrdersService,
-  ],
-  controllers: [ApiOrdersController],
-  exports: [OrderMetricsService],
+  providers: []
 })
 export class AppModule {}

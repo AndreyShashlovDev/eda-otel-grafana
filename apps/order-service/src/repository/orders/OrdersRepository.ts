@@ -8,6 +8,4 @@ export abstract class OrdersRepository {
   abstract findById(id: string): Promise<Order | null>
 
   abstract updateStatus(id: string, status: OrderStatus, metadata?: Record<string, unknown>): Promise<Order>
-
-  abstract save(order: Order): Promise<Order>
 }

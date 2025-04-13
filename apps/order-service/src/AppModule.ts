@@ -1,12 +1,11 @@
 import { ConfigModule } from '@app/config/ConfigModule'
-import { orderMetricsProviders } from '@app/telemetry/MetricsProviders'
-import { OrderMetricsService } from '@app/telemetry/OrderMetricsService'
-import { TelemetryModule } from '@app/telemetry/PrometheusModule'
-import { TracingModule } from '@app/telemetry/TracingModule'
+import { OrderMetricsService } from '@app/telemetry/metrics/order/OrderMetricsService'
+import { TelemetryModule } from '@app/telemetry/metrics/PrometheusModule'
+import { TracingModule } from '@app/telemetry/tracing/TracingModule'
 import { Module } from '@nestjs/common'
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { NotificationsModule } from './notifications/NotificationsModule'
-import { OrdersModule } from './OrdersModule'
+import { OrdersModule } from './api/OrdersModule'
 
 @Module({
   imports: [
@@ -21,10 +20,6 @@ import { OrdersModule } from './OrdersModule'
     OrdersModule,
     NotificationsModule,
   ],
-  providers: [
-    ...orderMetricsProviders,
-    OrderMetricsService,
-  ],
-  exports: [OrderMetricsService],
+  providers: [],
 })
 export class AppModule {}

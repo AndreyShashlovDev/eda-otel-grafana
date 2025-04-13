@@ -48,12 +48,6 @@
       "@app/telemetry/*": [
         "libs/telemetry/src/*"
       ],
-      "@app/repository": [
-        "libs/repository/src"
-      ],
-      "@app/repository/*": [
-        "libs/repository/src/*"
-      ]
     }
   }
 }

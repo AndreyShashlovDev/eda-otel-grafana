@@ -5,13 +5,13 @@ import {
   OrderProcessedEvent,
   OrderStatusUpdatedEvent
 } from '@app/dto/events/OrderEvents'
-import { CreateOrderDto } from '@app/dto/OrderDTO'
-import { OrdersRepository } from '@app/repository/orders/OrdersRepository'
-import { Track } from '@app/telemetry/decorators/MethodDecorators'
-import { TrackAll, TrackFields, TrackParam } from '@app/telemetry/decorators/ParamDecorators'
-import { OrderMetricsService } from '@app/telemetry/OrderMetricsService'
+import { CreateOrderDto, OrderResponseDto } from '@app/dto/OrderDTO'
+import { OrderMetricsService } from '@app/telemetry/metrics/order/OrderMetricsService'
+import { Track } from '@app/telemetry/tracing/decorators/MethodDecorators'
+import { TrackAll, TrackFields, TrackParam } from '@app/telemetry/tracing/decorators/ParamDecorators'
 import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { EventEmitter2 } from '@nestjs/event-emitter'
+import { OrdersRepository } from '../repository/orders/OrdersRepository'
 
 @Injectable()
 export class OrdersService {
@@ -26,8 +26,7 @@ export class OrdersService {
   @Track('createOrder')
   async createOrder(
     @TrackAll('order') createOrderDto: CreateOrderDto,
-    @TrackFields(['requestId', 'traceId'], 'headers') headers?: Record<string, unknown>
-  ): Promise<{ id: string; status: OrderStatus }> {
+  ): Promise<OrderResponseDto> {
     const order = await this.ordersRepository.create(createOrderDto)
 
     this.metricsService.incrementOrdersCreated(order.userId)
@@ -47,17 +46,13 @@ export class OrdersService {
       this.logger.error(`Error processing order ${order.id}: ${error.message}`, error.stack)
     })
 
-    return {
-      id: order.id,
-      status: order.status,
-    }
+    return order
   }
 
   @Track('getOrderById')
   async getOrderById(
     @TrackParam() id: string,
-    @TrackFields(['requestId', 'traceId'], 'headers') headers?: Record<string, any>
-  ): Promise<Order> {
+  ): Promise<OrderResponseDto> {
     const order = await this.ordersRepository.findById(id)
 
     if (!order) {

@@ -1,7 +1,7 @@
 import 'reflect-metadata'
-import { ParamExtractor, TRACK_PARAM_METADATA } from '@app/telemetry/decorators/ParamDecorators'
-import { TracingService } from '@app/telemetry/TracingService'
-import { getModuleRef } from '../../ModuleRef'
+import { ParamExtractor, TRACK_PARAM_METADATA } from '@app/telemetry/tracing/decorators/ParamDecorators'
+import { TracingService } from '@app/telemetry/tracing/TracingService'
+import { getModuleRef } from '../ModuleRef'
 
 export function Track(spanName?: string) {
   return function (
