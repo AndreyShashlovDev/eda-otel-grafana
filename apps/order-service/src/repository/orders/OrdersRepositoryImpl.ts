@@ -52,21 +52,28 @@ export class OrdersRepositoryImpl extends OrdersRepository {
     try {
       this.logger.debug(`Updating order ${id} status to ${status}`)
 
-      const order = await this.findById(id)
-      if (!order) {
-        throw new Error(`Order with ID ${id} not found`)
-      }
+      return await this.orderRepository.manager.transaction(async manager => {
+        const order = await manager
+          .createQueryBuilder(Order, 'order')
+          .setLock('pessimistic_write')
+          .where('order.id = :id', {id})
+          .getOne()
 
-      order.status = status
-
-      if (metadata) {
-        order.metadata = {
-          ...order.metadata,
-          ...metadata,
+        if (!order) {
+          throw new Error(`Order with ID ${id} not found`)
         }
-      }
 
-      return await this.orderRepository.save(order)
+        order.status = status
+
+        if (metadata) {
+          order.metadata = {
+            ...(order.metadata || {}),
+            ...metadata
+          }
+        }
+
+        return await manager.save(order)
+      })
     } catch (error) {
       this.logger.error(`Error updating order ${id} status: ${error.message}`, error.stack)
       throw error
